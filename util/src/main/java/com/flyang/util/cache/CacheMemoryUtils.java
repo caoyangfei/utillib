@@ -89,7 +89,7 @@ public final class CacheMemoryUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key, final Object value, int saveTime) {
         if (value == null) return;

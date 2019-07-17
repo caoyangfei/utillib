@@ -193,7 +193,7 @@ public final class CacheDiskUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key, byte[] value, final int saveTime) {
         if (value == null) return;
@@ -252,7 +252,7 @@ public final class CacheDiskUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key, final String value, final int saveTime) {
         put(key, string2Bytes(value), saveTime);
@@ -296,7 +296,7 @@ public final class CacheDiskUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key,
                     final JSONObject value,
@@ -343,7 +343,7 @@ public final class CacheDiskUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key, final JSONArray value, final int saveTime) {
         put(key, jsonArray2Bytes(value), saveTime);
@@ -387,7 +387,7 @@ public final class CacheDiskUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key, final Bitmap value, final int saveTime) {
         put(key, bitmap2Bytes(value), saveTime);
@@ -431,7 +431,7 @@ public final class CacheDiskUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key, final Drawable value, final int saveTime) {
         put(key, drawable2Bytes(value), saveTime);
@@ -475,7 +475,7 @@ public final class CacheDiskUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key, final Parcelable value, final int saveTime) {
         put(key, parcelable2Bytes(value), saveTime);
@@ -526,7 +526,7 @@ public final class CacheDiskUtils implements CacheConstant {
      *
      * @param key      The key of cache.
      * @param value    The value of cache.
-     * @param saveTime The save time of cache, in seconds.
+     * @param saveTime 缓存有效期, in seconds.
      */
     public void put(@NonNull final String key, final Serializable value, final int saveTime) {
         put(key, serializable2Bytes(value), saveTime);
