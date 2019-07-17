@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.flyang.util.log.LogUtils;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -13,6 +15,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Button(View view) {
-//        LogUtils.d("测试打印日志");
+        LogUtils.d("测试打印日志");
     }
 }
