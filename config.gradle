@@ -11,18 +11,10 @@ ext {
 
     isAlone = false
 
-    viewVersion = "2.1.1.2019_beta_02"
-    utilVersion = "2.1.1.2019_beta_01"
 
-    apiVersion = "2.1.1.2019_beta_02"
-    annotationVersion = "2.1.1.2019_beta_04"
 
     dep = [
             gson      : "com.google.code.gson:gson:2.8.5",
-            view      : "com.flyang.common:view:$viewVersion",
-            util      : "com.flyang.common:util:$utilVersion",
-            api       : "com.flyang.common:api:$apiVersion",
-            annotation: "com.flyang.common:annotation:$annotationVersion",
     ]
 }
 
