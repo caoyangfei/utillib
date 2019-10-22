@@ -199,6 +199,22 @@ public final class BarUtils {
         view.setTag(KEY_OFFSET, false);
     }
 
+    /**
+     * 为 view 增加 paddingTop 为状态栏高度
+     *
+     * @param view The view.
+     */
+    public static void addPaddingTopEqualStatusBarHeight(@NonNull View view) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        ViewGroup.LayoutParams lp = view.getLayoutParams();
+        if (lp != null && lp.height > 0) {
+            lp.height += getStatusBarHeight();//增高
+        }
+        view.setPadding(view.getPaddingLeft(), view.getPaddingTop() + getStatusBarHeight(),
+                view.getPaddingRight(), view.getPaddingBottom());
+    }
+
+
     private static void addMarginTopEqualStatusBarHeight(final Window window) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
         View withTag = window.getDecorView().findViewWithTag(TAG_OFFSET);
