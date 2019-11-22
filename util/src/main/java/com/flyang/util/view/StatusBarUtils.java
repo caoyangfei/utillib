@@ -3,6 +3,7 @@ package com.flyang.util.view;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -10,6 +11,8 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.DrawerLayout;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -17,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.flyang.util.R;
+import com.flyang.util.app.ApplicationUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -697,6 +701,8 @@ public class StatusBarUtils {
         return statusBarView;
     }
 
+
+
     /**
      * 获取状态栏高度
      *
@@ -728,5 +734,102 @@ public class StatusBarUtils {
         green = (int) (green * a + 0.5);
         blue = (int) (blue * a + 0.5);
         return 0xff << 24 | red << 16 | green << 8 | blue;
+    }
+
+    /**
+     * 获取底部导航栏高度
+     *
+     * @return the navigation bar's height
+     */
+    public static int getNavBarHeight(Activity activity) {
+        int navigationBarHeight = 0;
+        Resources resources = activity.getResources();
+        int resourceId = resources.getIdentifier(ScreenUtils.isPortrait() ? "navigation_bar_height" : "navigation_bar_height_landscape", "dimen", "android");
+        if (resourceId > 0 && checkDeviceHasNavigationBar(activity) && isNavBarVisible(activity)) {
+            navigationBarHeight = resources.getDimensionPixelSize(resourceId);
+        }
+        return navigationBarHeight;
+    }
+    /**
+     * 检测是否具有底部导航栏
+     *
+     * @param activity
+     * @return
+     */
+    private static boolean checkDeviceHasNavigationBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            WindowManager windowManager = activity.getWindowManager();
+            Display display = windowManager.getDefaultDisplay();
+            DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+            display.getRealMetrics(realDisplayMetrics);
+            int realHeight = realDisplayMetrics.heightPixels;
+            int realWidth = realDisplayMetrics.widthPixels;
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            display.getMetrics(displayMetrics);
+            int displayHeight = displayMetrics.heightPixels;
+            int displayWidth = displayMetrics.widthPixels;
+            return (realWidth - displayWidth) > 0 || (realHeight - displayHeight) > 0;
+        } else {
+            boolean hasNavigationBar = false;
+            Resources resources = activity.getResources();
+            int id = resources.getIdentifier("config_showNavigationBar", "bool", "android");
+            if (id > 0) {
+                hasNavigationBar = resources.getBoolean(id);
+            }
+            try {
+                Class systemPropertiesClass = Class.forName("android.os.SystemProperties");
+                Method m = systemPropertiesClass.getMethod("get", String.class);
+                String navBarOverride = (String) m.invoke(systemPropertiesClass, "qemu.hw.mainkeys");
+                if ("1".equals(navBarOverride)) {
+                    hasNavigationBar = false;
+                } else if ("0".equals(navBarOverride)) {
+                    hasNavigationBar = true;
+                }
+            } catch (Exception e) {
+            }
+            return hasNavigationBar;
+        }
+    }
+
+    /**
+     * 判断导航栏是否可见
+     * <p>Call it in onWindowFocusChanged will get right result.</p>
+     *
+     * @param activity The activity.
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isNavBarVisible(@NonNull final Activity activity) {
+        return isNavBarVisible(activity.getWindow());
+    }
+
+    /**
+     * 判断导航栏是否可见
+     * <p>Call it in onWindowFocusChanged will get right result.</p>
+     *
+     * @param window The window.
+     * @return {@code true}: yes<br>{@code false}: no
+     */
+    public static boolean isNavBarVisible(@NonNull final Window window) {
+        boolean isVisible = false;
+        ViewGroup decorView = (ViewGroup) window.getDecorView();
+        for (int i = 0, count = decorView.getChildCount(); i < count; i++) {
+            final View child = decorView.getChildAt(i);
+            final int id = child.getId();
+            if (id != View.NO_ID) {
+                String resourceEntryName = ApplicationUtils.getApp()
+                        .getResources()
+                        .getResourceEntryName(id);
+                if ("navigationBarBackground".equals(resourceEntryName)
+                        && child.getVisibility() == View.VISIBLE) {
+                    isVisible = true;
+                    break;
+                }
+            }
+        }
+        if (isVisible) {
+            int visibility = decorView.getSystemUiVisibility();
+            isVisible = (visibility & View.SYSTEM_UI_FLAG_HIDE_NAVIGATION) == 0;
+        }
+        return isVisible;
     }
 }
