@@ -17,12 +17,17 @@ public class Compiler {
     private List<ConcatenateLogPattern> queue;
 
     public static final Pattern PERCENT_PATTERN = Pattern.compile("%%");
+    //换行
     public static final Pattern NEWLINE_PATTERN = Pattern.compile("%n");
+    //路径
     public static final Pattern CALLER_PATTERN = Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?caller(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
-    public static final Pattern DATE_PATTERN = Pattern.compile("%date(\\{(.*?)\\})?");
-    public static final Pattern CONCATENATE_PATTERN = Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?\\(");
-    public static final Pattern DATE_PATTERN_SHORT = Pattern.compile("%d(\\{(.*?)\\})?");
     public static final Pattern CALLER_PATTERN_SHORT = Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?c(\\{([+-]?\\d+)?(\\.([+-]?\\d+))?\\})?");
+    //日期
+    public static final Pattern DATE_PATTERN = Pattern.compile("%date(\\{(.*?)\\})?");
+    public static final Pattern DATE_PATTERN_SHORT = Pattern.compile("%d(\\{(.*?)\\})?");
+
+    public static final Pattern CONCATENATE_PATTERN = Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?\\(");
+    //线程
     public static final Pattern THREAD_NAME_PATTERN = Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?thread");
     public static final Pattern THREAD_NAME_PATTERN_SHORT = Pattern.compile("%([+-]?\\d+)?(\\.([+-]?\\d+))?t");
 
